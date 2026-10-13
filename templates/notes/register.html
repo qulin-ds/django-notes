@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center py-4" style="min-height: calc(100vh - 160px);">
+  <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
+    <div class="card shadow-lg border-0 auth-card">
+      <div class="card-body p-4 p-sm-5">
+        <div class="text-center mb-4">
+          <div class="auth-badge mx-auto mb-3"><i class="bi bi-person-plus"></i></div>
+          <h1 class="h4 mb-1 fw-semibold" style="color: #0d6efd !important;">Регистрация</h1>
+          <div style="color: #495057 !important;">Создайте аккаунт, чтобы сохранять заметки</div>
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="{{ form.username.id_for_label }}" class="form-label fw-medium" style="color: #212529 !important;">
+              Имя пользователя
+            </label>
+            <input
+              type="text"
+              name="{{ form.username.html_name }}"
+              id="{{ form.username.id_for_label }}"
+              class="form-control form-control-lg {% if form.username.errors %}is-invalid{% endif %}"
+              value="{{ form.username.value|default_if_none:'' }}"
+              autocomplete="username"
+              required
+              style="border-color: #ced4da;"
+            >
+            {% if form.username.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.username.errors }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.password1.id_for_label }}" class="form-label fw-medium" style="color: #212529 !important;">
+              Пароль
+            </label>
+
+            <div class="input-group input-group-lg">
+              <input
+                type="password"
+                name="{{ form.password1.html_name }}"
+                id="{{ form.password1.id_for_label }}"
+                class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
+                autocomplete="new-password"
+                required
+                style="border-color: #ced4da; border-right: 0;"
+              >
+              <button class="btn btn-outline-secondary" type="button" id="togglePassword1" aria-label="Показать пароль" style="border-color: #ced4da; border-left: 0;">
+                <i class="bi bi-eye" id="togglePassword1Icon"></i>
+              </button>
+            </div>
+
+            {% if form.password1.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.password1.errors }}
+              </div>
+            {% endif %}
+
+            <button class="btn btn-link px-0 mt-2 small" type="button" data-bs-toggle="collapse" data-bs-target="#passwordHelp" style="color: #0d6efd !important;">
+              Требования к паролю
+            </button>
+            <div class="collapse" id="passwordHelp">
+              <div class="auth-help mt-2">
+                {{ form.password1.help_text|safe }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.password2.id_for_label }}" class="form-label fw-medium" style="color: #212529 !important;">
+              Подтверждение пароля
+            </label>
+
+            <div class="input-group input-group-lg">
+              <input
+                type="password"
+                name="{{ form.password2.html_name }}"
+                id="{{ form.password2.id_for_label }}"
+                class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
+                autocomplete="new-password"
+                required
+                style="border-color: #ced4da; border-right: 0;"
+              >
+              <button class="btn btn-outline-secondary" type="button" id="togglePassword2" aria-label="Показать пароль" style="border-color: #ced4da; border-left: 0;">
+                <i class="bi bi-eye" id="togglePassword2Icon"></i>
+              </button>
+            </div>
+
+            {% if form.password2.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.password2.errors }}
+              </div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-success btn-lg w-100 mt-2 fw-semibold" style="background-color: #198754; border-color: #198754;">
+            Зарегистрироваться
+          </button>
+        </form>
+
+        <div class="text-center mt-4">
+          <div class="mb-2" style="color: #495057 !important;">Уже есть аккаунт?</div>
+          <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm fw-medium">
+            Войти
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    function setupToggle(btnId, inputId, iconId) {
+      const btn = document.getElementById(btnId);
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!btn || !input || !icon) return;
+
+      btn.addEventListener('click', function () {
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        icon.classList.toggle('bi-eye', !isHidden);
+        icon.classList.toggle('bi-eye-slash', isHidden);
+        btn.setAttribute('aria-label', isHidden ? 'Скрыть пароль' : 'Показать пароль');
+      });
+    }
+
+    setupToggle('togglePassword1', '{{ form.password1.id_for_label }}', 'togglePassword1Icon');
+    setupToggle('togglePassword2', '{{ form.password2.id_for_label }}', 'togglePassword2Icon');
+  })();
+</script>
+{% endblock %}

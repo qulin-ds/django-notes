@@ -1,0 +1,80 @@
+:root{
+  --bg1:#0b1220;
+  --bg2:#0f1c2e;
+}
+
+.app-body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(59,130,246,.18), transparent 60%),
+    radial-gradient(900px 500px at 80% 0%, rgba(16,185,129,.14), transparent 55%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+  color: #e5e7eb;
+}
+
+main.container{
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
+
+.navbar{
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+
+.card{
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255,255,255,.92);
+}
+
+.card-header{
+  border-top-left-radius: 14px !important;
+  border-top-right-radius: 14px !important;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+  opacity: .92;
+}
+.navbar-dark .navbar-nav .nav-link:hover{
+  opacity: 1;
+}
+
+footer .text-muted{
+  color: rgba(255,255,255,.55) !important;
+}
+.auth-card{
+  background: rgba(255,255,255,.92);
+  border-radius: 18px;
+}
+
+.auth-badge{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #0b1220;
+  background: rgba(59,130,246,.14);
+  border: 1px solid rgba(59,130,246,.25);
+}
+
+.auth-help{
+  padding: 12px 12px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, .06);
+  border: 1px solid rgba(15, 23, 42, .08);
+  color: rgba(15, 23, 42, .85);
+  font-size: 0.92rem;
+}
+
+.auth-help ul{
+  margin: 8px 0 0 18px;
+}
+.auth-help li{
+  margin: 4px 0;
+}
+
+.input-group .btn-outline-secondary{
+  border-color: rgba(15, 23, 42, .18);
+}
